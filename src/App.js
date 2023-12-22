@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./index.css"
 import Login from "./page/Login";
-import Header from "./component/Header";
+import Header from "./component/header/Header";
 import Signup from "./page/Signup";
 import { RecoilRoot } from "recoil";
 import TransformReceipt from "./page/TransformReceipt";
@@ -10,13 +10,14 @@ import MainPage from "./page/Main";
 import ChangePassword from "./page/ChangePassword"
 import Find from "./page/Find";
 
+
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <RecoilRoot>
           <Header />
-          <main className="w-[90%] mx-auto h-full">
+          <main className="w-[90%] h-full mx-auto">
             <Routes>
               <Route path="/" element={<MainPage/>}/>
               <Route path="/login" element={<Login/>}/>

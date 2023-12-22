@@ -1,31 +1,45 @@
 import { useNavigate } from "react-router"
-import ChangeReceiptIcon from "../image/ChangeReceiptIcon"
-import LockIcon from "../image/LockIcon"
-import PowerIcon from "../image/PowerIcon"
-import RegisterIcon from "../image/RegisterIcon"
-import WriteIcon from "../image/WriteIcon"
+import ChangeReceiptIcon from "../../image/ChangeReceiptIcon"
+import LockIcon from "../../image/LockIcon"
+import PowerIcon from "../../image/PowerIcon"
+import RegisterIcon from "../../image/RegisterIcon"
+import WriteIcon from "../../image/WriteIcon"
 import { useRecoilState } from "recoil"
-import { AtomIsLogin } from "./common/Common"
+import { AtomIsExpanded, AtomIsLogin } from "../common/Common"
 import { useEffect, useState } from "react"
-import ArrowLeftIcon from "../image/ArrowLeftIcon"
-import ArrowRightIcon from "../image/ArrowRightIcon"
+import ArrowLeftIcon from "../../image/ArrowLeftIcon"
+import ArrowRightIcon from "../../image/ArrowRightIcon"
 
 const Header = () => {
-    const [isExpanded, setIsExpanded] = useState(true);
+    const [isExpanded, setIsExpanded] = useState(AtomIsExpanded);
+    const navigate = useNavigate();
 
     const toggleSidebar = () => {
         setIsExpanded(!isExpanded);
     }
 
     useEffect(()=>{
+        const header = document.querySelector("#header");
+        setIsExpanded(true);
+        setTimeout(()=>{
+            header.classList.remove("z-[-10]"); 
+            header.classList.add("z-[9999]");
+        },501);
+    },[navigate])
+    
+    useEffect(()=>{
         const innerWidth = window.innerWidth;
-        if(innerWidth <= 768) setTimeout(()=>{setIsExpanded(false)},500)
+        if(innerWidth <= 768) setTimeout(()=>{setIsExpanded(false)},500);
+        const main = document.querySelector("main");
+        main.addEventListener('click',()=>{
+            setIsExpanded(false);
+        })
     },[])
 
     useEffect(() => {
         const header = document.querySelector("#header");
         if (isExpanded === false) {
-            setTimeout(() => {
+            setTimeout(()=>{
                 header.classList.add("z-[-10]");
                 header.classList.remove("z-[9999]");
             },500)
@@ -61,8 +75,6 @@ const Header = () => {
         }
     ]
 
-    const navigate = useNavigate();
-
     const handleLoginButton = () => {
         navigate("/login")
     }
@@ -85,7 +97,7 @@ const Header = () => {
                     <div className="w-full h-[6rem] border-b-[1px] border-black">
                         <h1 onClick={(e)=>{handleNavigate(e,"/")}} className="pt-3 pl-4 h-[50%] w-full text-white text-lg font-bold hover:cursor-pointer hover:opacity-70">영수증 변환 프로그램</h1>
                         <div className="h-[27%] w-full flex">
-                            <button onClick={isLoggedIn ? handleLogoutButton : handleLoginButton} className="w-[50%] flex pt-2 pl-6">
+                            <button onClick={isLoggedIn ? handleLogoutButton : handleLoginButton} className="w-[50%] flex pt-2 pl-6 hover:opacity-70">
                                 <PowerIcon />
                                 <div className=" text-white text-base pl-1 pt-[1px]">
                                     {isLoggedIn ? "로그아웃" : "로그인"}
@@ -95,7 +107,7 @@ const Header = () => {
                                 {isLoggedIn ? (
                                     <span className="text-center">{sessionStorage.getItem("username")}님 환영합니다</span>
                                 ) : (
-                                    '로그인 하세요'
+                                    '로그인이 필요합니다'
                                 )}
                             </div>
                         </div>

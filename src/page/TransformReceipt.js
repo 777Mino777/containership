@@ -1,7 +1,11 @@
+import TitleHeader from "../component/common/TitleHeader"
+import TransformInput from "../component/transform/TransformInput"
+
 const TransformReceipt = () => {
   return (
-    <div>
-      영수증 변환 페이지
+    <div className="w-full max-w-[30rem] h-full mx-auto">
+      <TitleHeader title={"TRANSFORM RECEIPT"}/>
+      <TransformInput/>
     </div>
   )
 }
