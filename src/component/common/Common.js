@@ -6,3 +6,8 @@ export const AtomIsLogin = atom({
     key: "isLogin",
     default: false,
 })
+
+export const AtomIsExpanded = atom({
+    key: "isExpanded",
+    default: true,
+})
